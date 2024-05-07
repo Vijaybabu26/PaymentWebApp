@@ -48,9 +48,13 @@ public class UserDao {
 	    pstmt.setString(2, Password);
 	    
 	    ResultSet res = pstmt.executeQuery();
+	    if(res.next()) {
+	    	System.out.println(res.getInt("UserId"));
+	    	return res.getInt("UserId");
+	    	
+	    }
 	    
-	    res.next();
-	        return res.getInt("UserId");
+	        return 0;
 	}
 	
 	public String UserNameDb(int userID)  throws SQLException {
@@ -58,7 +62,15 @@ public class UserDao {
 			Statement st = con.createStatement();
 			String userq = "Select FirstName,LastName from User where UserId = '"+userID+"'";
 			ResultSet res =  st.executeQuery(userq);
-			return res.getString("FirstName")+" " + res.getString("LastName");
+			
+			if(res.next()) {
+		    	
+			    	System.out.println(res.getString("FirstName")+" " + res.getString("LastName"));
+			    	return res.getString("FirstName")+"" + res.getString("LastName");
+		    	
+		    }
+			
+			return null;
 	}
 	
 }

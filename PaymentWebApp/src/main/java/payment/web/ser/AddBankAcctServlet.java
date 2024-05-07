@@ -29,7 +29,7 @@ public class AddBankAcctServlet extends HttpServlet {
 		String BankAcctId = request.getParameter("accttypeid");
 		String BankIFSCCode = request.getParameter("bankifsc");
 		String BankAcctPin = request.getParameter("bankpin");
-		HttpSession hs = request.getSession();
+//		HttpSession hs = request.getSession();
 		
 		
 		BankAccount ba = new BankAccount();
@@ -39,13 +39,9 @@ public class AddBankAcctServlet extends HttpServlet {
 		ba.setBankIFSCCode(BankIFSCCode);
 		ba.setBankPin(Integer.parseInt(BankAcctPin));
 		ba.setCurrBankBal(500);
-	
-		Object obj = hs.getAttribute("UserId");
-		if (obj instanceof Integer) {
-		    int UserId = ((Integer) obj).intValue();
+		int UserId = (int) request.getAttribute("UserId");
 		    ba.setUserId(UserId);
-		}
-		
+
 		try {
 			BankAcctUserDao db = new BankAcctUserDao();
 			if(db.AddBankAcct(ba)>0) {
@@ -53,10 +49,10 @@ public class AddBankAcctServlet extends HttpServlet {
 				rd.forward(request, response);
 			}
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		

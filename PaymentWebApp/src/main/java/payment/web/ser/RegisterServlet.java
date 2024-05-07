@@ -61,10 +61,15 @@ public class RegisterServlet extends HttpServlet {
 		try {
 			UserDao udb = new UserDao();
 			if(udb.RegisterDb(u)>0) {
-				HttpSession session = request.getSession();
-				session.setAttribute("msg","Register SuccessFull");
+				response.setContentType("text/html");
+				response.getWriter().write("REGISTRATION SUCCESSFULL");
 				RequestDispatcher rd = request.getRequestDispatcher("/Welcome.jsp");
-				rd.forward(request, response);
+				rd.include(request, response);
+			}else{
+				response.setContentType("text/html");
+				response.getWriter().write("Please Enter The Correct Password");
+				RequestDispatcher rd = request.getRequestDispatcher("/Register.jsp");
+				rd.include(request, response);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
