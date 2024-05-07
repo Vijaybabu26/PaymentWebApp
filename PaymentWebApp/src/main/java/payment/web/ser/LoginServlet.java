@@ -39,12 +39,17 @@ public class LoginServlet extends HttpServlet {
 			UserId = db.LoginDb(Phno, PassWord);
 			 UserName = db.UserNameDb(UserId);
 			 System.out.println(UserName);
+			 HttpSession session = request.getSession();
+				session.setAttribute("user", UserId);
+				session.setAttribute("name", UserName);
 			if(UserId != 0) {
+				
+				
 				request.setAttribute("name", UserName);
 				request.setAttribute("UserId", UserId);
 				
 				List<BankAccount> balist = Bdb.BankAcctList(UserId);
-				request.setAttribute("Balist", balist);
+				session.setAttribute("Balist", balist);
 				
 				Cookie ck = new Cookie("UserName",UserName);
 				response.addCookie(ck);

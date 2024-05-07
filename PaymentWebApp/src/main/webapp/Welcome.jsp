@@ -18,7 +18,9 @@
 		<label>PassWord :</label><input type="text" name="PassWord"><br>
 		<input type="submit">
 		</form>
-		
+		<form>
+		<a href="http://localhost:8080/PaymentWebApp/Register.jsp"><h2>REGISTER</h2></a>
+		</form>
 
 </center>
 </body>

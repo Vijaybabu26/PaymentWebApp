@@ -21,12 +21,15 @@
 </div>
 
 <div class="header">
-	<% String UserName = (String)request.getAttribute("name"); %>
+	<% 
+	
+	String UserName = (String)session.getAttribute("name"); %>
 	<h2>Welcome <%=UserName %> ;</h2>
 </div>
 <div class="BankAcctList"> 
 	<h1>BANK ACCOUNT LIST</h1><br>
-	<% List<BankAccount> balist = (List<BankAccount>)request.getAttribute("Balist"); 
+	<% List<BankAccount> balist = (List<BankAccount>)session.getAttribute("Balist"); 
+		if(balist != null){
 		for(int i= 0;i<balist.size();i++){ 
 			BankAccount ba = balist.get(i);%>
 		<hr>
@@ -35,8 +38,9 @@
 		<h2>BankAcount IfscCode : <%=ba.getBankIFSCCode()%></h2>
 		<h2>Current Bank Balance : <%=ba.getCurrBankBal()%></h2>
 		<%} %>
-		<form action="">
-		<a href="/AddBankAcct.jsp"></a><input type="button" value="Add Bank Account" ></a>
+		<%} %>
+		<form action="http://localhost:8080/PaymentWebApp/AddBankAcct.jsp">
+		<input type="submit" value="Add Bank Account" >
 		</form>
 </div>
 </center>

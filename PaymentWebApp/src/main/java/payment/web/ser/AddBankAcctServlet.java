@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.websocket.Session;
 import payment.web.dao.BankAcctUserDao;
 import payment.web.entity.BankAccount;
+import payment.web.entity.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -39,14 +40,23 @@ public class AddBankAcctServlet extends HttpServlet {
 		ba.setBankIFSCCode(BankIFSCCode);
 		ba.setBankPin(Integer.parseInt(BankAcctPin));
 		ba.setCurrBankBal(500);
-		int UserId = (int) request.getAttribute("UserId");
-		    ba.setUserId(UserId);
+		
+		HttpSession session = request.getSession();
+		int UserId = (int)session.getAttribute("user");
+		System.out.println(UserId);
+		ba.setUserId(UserId);
+
 
 		try {
 			BankAcctUserDao db = new BankAcctUserDao();
 			if(db.AddBankAcct(ba)>0) {
 				RequestDispatcher rd = request.getRequestDispatcher("/Dashboard.jsp");
 				rd.forward(request, response);
+			}else {
+				response.setContentType("text/html");
+				response.getWriter().write("PLEASE ENTER THE CORRECT BANK ACCOUNT DETAILS");
+				RequestDispatcher rd = request.getRequestDispatcher("/AddBankAcct.jsp");
+				rd.include(request, response);
 			}
 		} catch (ClassNotFoundException e) {
 			
