@@ -31,8 +31,9 @@ public class LoginServlet extends HttpServlet {
 		String Phno = request.getParameter("Phno");
 		String PassWord = request.getParameter("PassWord");
 		System.out.println(Phno+PassWord);
-		int UserId = 0;
+		int  UserId = 0;
 		String UserName =null;
+		
 		try {
 			UserDao db = new UserDao();
 			BankAcctUserDao Bdb = new BankAcctUserDao();

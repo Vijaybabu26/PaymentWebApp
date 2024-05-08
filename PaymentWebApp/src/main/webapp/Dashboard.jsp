@@ -26,6 +26,9 @@
 	String UserName = (String)session.getAttribute("name"); %>
 	<h2>Welcome <%=UserName %> ;</h2>
 </div>
+<div class="menu">
+<a href="http://localhost:8080/PaymentWebApp/SendMoneyToBW.jsp"><h2>Send Wallet To Bank</h2></a>
+</div>
 <div class="BankAcctList"> 
 	<h1>BANK ACCOUNT LIST</h1><br>
 	<% List<BankAccount> balist = (List<BankAccount>)session.getAttribute("Balist"); 

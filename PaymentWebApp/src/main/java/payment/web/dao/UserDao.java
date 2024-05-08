@@ -72,18 +72,20 @@ public class UserDao {
 			
 			return null;
 	}
-//	public int GetUserId(long BankAccountNo)throws SQLException{
-//		Statement st = con.createStatement();
-//		String userq = "Select UserId from BankAccount where UserId = '"+userID+"'";
-//		ResultSet res =  st.executeQuery(userq);
-//		
-//		if(res.next()) {
-//	    	
-//		    	System.out.println(res.getString("FirstName")+" " + res.getString("LastName"));
-//		    	return res.getString("FirstName")+"" + res.getString("LastName");
-//	    	
-//	    }
-//		
-//	}
+	public int getUserId(String Phno)  throws SQLException {
+		
+		Statement st = con.createStatement();
+		String userq = "Select UserId from User where PhoneNo = '"+Phno+"'";
+		ResultSet res =  st.executeQuery(userq);
+		
+		if(res.next()) {
+	    	
+		    	return res.getInt("UserId");
+	    	
+	    }
+		
+		return 0;
+}
+
 	
 }
