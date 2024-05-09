@@ -9,15 +9,15 @@
 </head>
 <body>
 <center>
-	<h1>Login</h1>
+		<h1>Login</h1><br><hr><br>
 
 	
 
 		<form action="http://localhost:8080/PaymentWebApp/LoginServlet" method="post">
-		<label>Mobile No : </label><input type="text" name="Phno"><br>
-		<label>PassWord :</label><input type="text" name="PassWord"><br>
+		<label>Mobile No : </label><input type="text" name="Phno"><br><br>
+		<label>PassWord :</label><input type="text" name="PassWord"><br><br>
 		<input type="submit">
-		</form>
+		</form><hr>
 		<form>
 		<a href="http://localhost:8080/PaymentWebApp/Register.jsp"><h2>REGISTER</h2></a>
 		</form>

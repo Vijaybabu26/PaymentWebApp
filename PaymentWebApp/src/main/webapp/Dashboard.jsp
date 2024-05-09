@@ -12,23 +12,23 @@
 <body>
 <center>
 <div class = "navbar">
-<h3>WELCOME TO</h3>
+<h2>WELCOME TO</h2>
 <h1>PAYMENT WEB APP</h1>
 
 <form action="http://localhost:8080/PaymentWebApp/LogoutServlet">
 <input type="Submit" value="LOG OUT" align="right"/>
-</form>
+</form><hr>
 </div>
 
 <div class="header">
-	<% 
-	
-	String UserName = (String)session.getAttribute("name"); %>
-	<h2>Welcome <%=UserName %> ;</h2>
-</div>
+	<% String UserName = (String)session.getAttribute("name"); %>
+	<h1>Welcome <%=UserName %>;</h1>
+</div><hr>
 <div class="menu">
-<a href="http://localhost:8080/PaymentWebApp/SendMoneyToBW.jsp"><h2>Send Wallet To Bank</h2></a>
-</div>
+
+<a href="http://localhost:8080/PaymentWebApp/Transaction.jsp"><h2>Transactions</h2></a>
+</div><hr>
+</center>    
 <div class="BankAcctList"> 
 	<h1>BANK ACCOUNT LIST</h1><br>
 	<% List<BankAccount> balist = (List<BankAccount>)session.getAttribute("Balist"); 
@@ -36,16 +36,17 @@
 		for(int i= 0;i<balist.size();i++){ 
 			BankAccount ba = balist.get(i);%>
 		<hr>
-		<h2>BankAcount No : <%=ba.getBankAcctName()%></h2>
+		<h2>BankAcount No : <%=ba.getBankAcctNo()%></h2>
 		<h2>BankAcount Name : <%=ba.getBankAcctName()%></h2>
 		<h2>BankAcount IfscCode : <%=ba.getBankIFSCCode()%></h2>
 		<h2>Current Bank Balance : <%=ba.getCurrBankBal()%></h2>
+		
 		<%} %>
 		<%} %>
 		<form action="http://localhost:8080/PaymentWebApp/AddBankAcct.jsp">
 		<input type="submit" value="Add Bank Account" >
 		</form>
 </div>
-</center>
+
 </body>
 </html>

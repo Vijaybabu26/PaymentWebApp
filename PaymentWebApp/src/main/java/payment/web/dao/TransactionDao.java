@@ -13,12 +13,12 @@ import jakarta.servlet.http.HttpSession;
 import payment.web.entity.BankAccount;
 
 public class TransactionDao {
-	static Connection con;
+	Connection con;
 	public TransactionDao() throws ClassNotFoundException,SQLException{
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PaymentWebApp", "root", "root");
 	}
-	public static boolean DoBWTransaction(String SrcPhno,double TxnAmount,String DestAccNo) throws ClassNotFoundException,SQLException{
+	public boolean DoBWTransaction(String SrcPhno,double TxnAmount,String DestAccNo) throws ClassNotFoundException,SQLException{
 			Statement st = con.createStatement();
 			
 //			String SenderType = "DEBIT";
@@ -33,10 +33,13 @@ public class TransactionDao {
 			
 			UserDao db;
 		
-				db = new UserDao();
+			db = new UserDao();
 				
 			
 			int UserID = db.getUserId(SrcPhno);
+			System.out.println(UserID);
+			System.out.println(TxnAmount);
+			System.out.println(DestAccNo);
 			
 			String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ DestAccNo +"' and UserId = '"+UserID+"'";
 			String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+SrcPhno+"'";
@@ -57,7 +60,7 @@ public class TransactionDao {
 			
 			return true;
 		}
-		public static String VerifyAccountNo(String AccNo) {
+		public String VerifyAccountNo(String AccNo) {
 		try {
 			
 			Statement Stm = con.createStatement();

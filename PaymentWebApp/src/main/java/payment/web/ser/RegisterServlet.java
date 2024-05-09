@@ -44,7 +44,6 @@ public class RegisterServlet extends HttpServlet {
 		try {
 		  dateb = format.parse(Dob);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
