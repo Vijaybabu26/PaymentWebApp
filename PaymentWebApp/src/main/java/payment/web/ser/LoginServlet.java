@@ -13,11 +13,14 @@ import jakarta.servlet.http.HttpSessionContext;
 import payment.web.dao.BankAcctUserDao;
 import payment.web.dao.UserDao;
 import payment.web.entity.BankAccount;
+import payment.web.entity.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.List;
+
+import com.mysql.cj.Session;
 
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,33 +33,34 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String Phno = request.getParameter("Phno");
 		String PassWord = request.getParameter("PassWord");
-		System.out.println(Phno+PassWord);
 		int  UserId = 0;
 		String UserName =null;
 		
 		try {
 			UserDao db = new UserDao();
-			BankAcctUserDao Bdb = new BankAcctUserDao();
+//			BankAcctUserDao Bdb = new BankAcctUserDao();
 			UserId = db.LoginDb(Phno, PassWord);
 			 UserName = db.UserNameDb(UserId);
-			 System.out.println(UserName);
-			 HttpSession session = request.getSession();
-				session.setAttribute("user", UserId);
-				session.setAttribute("name", UserName);
+			User SessionUser = db.getUser(Phno);
+			
+			
+				
 			if(UserId != 0) {
 				
 				
-				request.setAttribute("name", UserName);
+//				request.setAttribute("name", UserName);
 				request.setAttribute("UserId", UserId);
+				HttpSession session = request.getSession();
+				session.setAttribute("user", UserId);
+				session.setAttribute("name", UserName);
+				session.setAttribute("userd", SessionUser);
 				
-				List<BankAccount> balist = Bdb.BankAcctList(UserId);
-				session.setAttribute("Balist", balist);
-				
-				Cookie ck = new Cookie("UserName",UserName);
-				response.addCookie(ck);
+//				
+//				Cookie ck = new Cookie("UserName",UserName);
+//				response.addCookie(ck);
 				
 				
-				RequestDispatcher rd = request.getRequestDispatcher("/Dashboard.jsp");
+				RequestDispatcher rd = request.getRequestDispatcher("/BankAcctListSer");
 				rd.forward(request, response);
 				
 			}else {
