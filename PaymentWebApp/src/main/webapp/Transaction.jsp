@@ -12,8 +12,8 @@
 	<h3>Verify the Source and Destination File</h3>
 	<a href="SendMoneyToWB.jsp"><h2> Wallet To Bank</h2></a>
 	<a href="SendMoneyToBW.jsp"><h2> Bank To Wallet</h2></a>
-	<a href=""><h2> Bank To Bank</h2></a>
-	<a href=""><h2> Wallet To Wallet</h2></a>	
+	<a href="SendMoneyToBB.jsp"><h2> Bank To Bank</h2></a>
+	<a href="SendMoneyToWW.jsp"><h2> Wallet To Wallet</h2></a>	
 	</center>
 </body>
 </html>

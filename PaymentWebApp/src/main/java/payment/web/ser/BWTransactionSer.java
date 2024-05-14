@@ -13,32 +13,34 @@ import payment.web.entity.User;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class WBTransactionSer extends HttpServlet {
+public class BWTransactionSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
-    public WBTransactionSer() {
+    public BWTransactionSer() {
         super();
-        
+        // TODO Auto-generated constructor stub
     }
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
+		
 	}
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String AccountNo = request.getParameter("accountno");
-    	String TxnAmount = request.getParameter("Wamount");
-    	double txamount = Double.parseDouble(TxnAmount);
-    	
-    	HttpSession session = request.getSession();
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String phno = request.getParameter("phno");
+		String AccountNo = request.getParameter("accountno");
+		String Amount = request.getParameter("txnamount");
+		double TxnAmount = Double.parseDouble(Amount);
+		
+		HttpSession session = request.getSession();
 		User sessionUser = (User)session.getAttribute("userd");
 		String Phno = sessionUser.getPhno();
-		System.out.println(AccountNo + TxnAmount + txamount + Phno);
+		
 		try {
 			TransactionDao txn = new TransactionDao();
 			if(txn.VerifyAccountNo(AccountNo)!= null) {
-	    		
-	    		txn.DoWBTransaction(AccountNo,txamount , Phno);
-	    		double WalletBal = txn.getWalletBalance(Phno);
+				txn.DoBWTransaction(TxnAmount, phno, AccountNo);
+				double WalletBal = txn.getWalletBalance(Phno);
 				sessionUser.setCurrWalletBalance(WalletBal);
 				response.setContentType("text/html");
 				response.getWriter().write("Transaction Successfull");
@@ -49,13 +51,12 @@ public class WBTransactionSer extends HttpServlet {
 				response.getWriter().write("Transaction Failed");
 				RequestDispatcher rd = request.getRequestDispatcher("SendMoneyToWB.jsp");
 				rd.include(request, response);
-			}
-		} catch (ClassNotFoundException | SQLException e) {
+	    	}
+		}catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-    	
 	}
 
 }

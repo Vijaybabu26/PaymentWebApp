@@ -33,6 +33,9 @@ public class TransactionDao {
 		return true;
 		
 	}
+	
+	
+	
 		public String VerifyAccountNo(String AccNo) {
 		try {
 			
@@ -78,6 +81,44 @@ public class TransactionDao {
 			return 0;
 			
 		}
+		
+		public void DoWBTransaction(String DestB, double TxnAmount, String SenderMobileNo) {
+			try {
+				Statement Stm = con.createStatement();
+//				
+				String wquery = "Update user Set CurrWalletBalance = CurrWalletBalance - '"+TxnAmount+"' where PhoneNo = '"+SenderMobileNo+"'";
+
+				String bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance + '"+TxnAmount+"' where BankAcctNo = '"+DestB+"'";
+				
+				Stm.executeUpdate(wquery);
+				Stm.executeUpdate(bquery);
+				
+		
+				Stm.close();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+				
+		}
+		
+		public void DoBWTransaction(double TxnAmount, String ReciverMobileNo, String SendAcctNo) {
+			try {
+				Statement Stm = con.createStatement();
+//				
+			String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ SendAcctNo +"'";
+			String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+ReciverMobileNo+"'";
+			
+			Stm.executeUpdate(Wquery);
+			Stm.executeUpdate(Bquery);
+			
+	
+			Stm.close();
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+			
+			}
+		
 		
 		
 	}

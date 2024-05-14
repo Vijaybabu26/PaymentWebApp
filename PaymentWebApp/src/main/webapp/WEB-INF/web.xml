@@ -99,4 +99,14 @@
     <servlet-name>WBTransactionSer</servlet-name>
     <url-pattern>/WBTransactionSer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BWTransactionSer</display-name>
+    <servlet-name>BWTransactionSer</servlet-name>
+    <servlet-class>payment.web.ser.BWTransactionSer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BWTransactionSer</servlet-name>
+    <url-pattern>/BWTransactionSer</url-pattern>
+  </servlet-mapping>
 </web-app>
