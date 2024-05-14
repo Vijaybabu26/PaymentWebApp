@@ -10,19 +10,19 @@
 	<center>
 	<h1>Add Money To Wallet</h1><hr>
 	
-	<form>
+	
 
 	
 	<h1>Enter The Destination Details</h1><br>
-	<form action="http://localhost:8080/PaymentWebApp/AddMoneyToWallet" method="post">
+	<form action="http://localhost:8080/PaymentWebApp/AddMoneyToWalletSer" method="post">
 	<label><h3>Enter The Bank Account No : </h3></label><input type="text" name="accountno"><br>
 	<h1>Enter The Source Details</h1><br>
 	<label><h3>Enter The Amount :  </h3></label><input type="text" name="wamount"><br>
 	<input type="submit" value="Add Money">
 	</form>
 	</center>
-	</form>
 	
-	</center>
+	
+
 </body>
 </html>

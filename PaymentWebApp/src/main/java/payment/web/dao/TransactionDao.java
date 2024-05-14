@@ -53,6 +53,29 @@ public class TransactionDao {
 		}
 		return null;
 		}
+		public double getWalletBalance(String phno) {
+			try {
+				
+				Statement Stm = con.createStatement();
+				String Uquery = "Select CurrWalletBalance from user where PhoneNo ='"+phno+"'" ;
+				
+				ResultSet res = Stm.executeQuery(Uquery);
+				if(res.next()) {
+					System.out.println("User Found!");
+					return res.getDouble("CurrWalletBalance");
+				}else{
+					
+					System.out.println("Account Not Found!");
+				
+				}
+				Stm.close();
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return 0;
+			
+		}
 		
 		
 	}

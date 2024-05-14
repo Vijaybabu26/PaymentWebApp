@@ -79,15 +79,14 @@
     <servlet-name>LogoutServlet</servlet-name>
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
-
   <servlet>
     <description></description>
-    <display-name>AddMoneyToWallet</display-name>
-    <servlet-name>AddMoneyToWallet</servlet-name>
-    <servlet-class>payment.web.ser.AddMoneyToWallet</servlet-class>
+    <display-name>AddMoneyToWalletSer</display-name>
+    <servlet-name>AddMoneyToWalletSer</servlet-name>
+    <servlet-class>payment.web.ser.AddMoneyToWalletSer</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>AddMoneyToWallet</servlet-name>
-    <url-pattern>/AddMoneyToWallet</url-pattern>
+    <servlet-name>AddMoneyToWalletSer</servlet-name>
+    <url-pattern>/AddMoneyToWalletSer</url-pattern>
   </servlet-mapping>
 </web-app>
