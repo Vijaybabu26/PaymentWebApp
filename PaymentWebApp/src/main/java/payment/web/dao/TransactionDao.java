@@ -23,8 +23,10 @@ public class TransactionDao {
 		Statement st = con.createStatement();
 		UserDao db = new UserDao();
 		int UserId = db.getUserId(SrcPhno);
+		
 		String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ DestAccNo +"' and UserId = '"+UserId+"'";
 		String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+SrcPhno+"'";
+		
 		st.executeUpdate(Wquery);
 		st.executeUpdate(Bquery);
 		st.close();

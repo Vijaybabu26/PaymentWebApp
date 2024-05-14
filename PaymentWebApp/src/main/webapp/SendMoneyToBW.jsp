@@ -12,8 +12,9 @@
 	<center><br>
 	<h1>Send Money To Wallet</h1><br><hr>
 	<h3>Send money from Bank Account To Wallet</h3><br><hr>
+	<h3>Send money using Account No Mobile No</h3><br><hr>
 	<h1>Enter The Destination Details</h1><br>
-	<form action="http://localhost:8080/PaymentWebApp/AddWalletToBankServlet" method="post">
+	<form action="" method="post">
 	<label><h3>Enter The Bank Account No : </h3></label><input type="text" name="accountno"><br><hr>
 	<h1>Enter The Source Details</h1><br>
 	<label><h3>Enter The Mobile No :</h3></label><input type="text" name="phno"><br>

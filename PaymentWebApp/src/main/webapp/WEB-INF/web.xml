@@ -89,4 +89,14 @@
     <servlet-name>AddMoneyToWalletSer</servlet-name>
     <url-pattern>/AddMoneyToWalletSer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WBTransactionSer</display-name>
+    <servlet-name>WBTransactionSer</servlet-name>
+    <servlet-class>payment.web.ser.WBTransactionSer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WBTransactionSer</servlet-name>
+    <url-pattern>/WBTransactionSer</url-pattern>
+  </servlet-mapping>
 </web-app>
