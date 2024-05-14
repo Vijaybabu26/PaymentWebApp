@@ -109,4 +109,24 @@
     <servlet-name>BWTransactionSer</servlet-name>
     <url-pattern>/BWTransactionSer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>BBTransactionSer</display-name>
+    <servlet-name>BBTransactionSer</servlet-name>
+    <servlet-class>payment.web.ser.BBTransactionSer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>BBTransactionSer</servlet-name>
+    <url-pattern>/BBTransactionSer</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>WWTransactionSer</display-name>
+    <servlet-name>WWTransactionSer</servlet-name>
+    <servlet-class>payment.web.ser.WWTransactionSer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>WWTransactionSer</servlet-name>
+    <url-pattern>/WWTransactionSer</url-pattern>
+  </servlet-mapping>
 </web-app>

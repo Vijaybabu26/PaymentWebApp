@@ -100,12 +100,11 @@ public class TransactionDao {
 			}
 				
 		}
-		
-		public void DoBWTransaction(double TxnAmount, String ReciverMobileNo, String SendAcctNo) {
+		public void DoBWTransaction(double TxnAmount, String ReciverMobileNo, String SendAcctNo, String BankAcctPin) {
 			try {
 				Statement Stm = con.createStatement();
 //				
-			String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ SendAcctNo +"'";
+			String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ SendAcctNo +"' and BankAcctPin = '"+BankAcctPin +"'";
 			String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+ReciverMobileNo+"'";
 			
 			Stm.executeUpdate(Wquery);
@@ -113,12 +112,42 @@ public class TransactionDao {
 			
 	
 			Stm.close();
-		}catch(SQLException e) {
-			e.printStackTrace();
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
 		}
 			
-			}
 		
+		public void DoBBTransaction(String SAcctNo,String Spin, String RAcctNo,double TxnAmount) {
+			
+			try {
+				Statement Stm = con.createStatement();
+				String Squery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"' where BankAcctNo = '"+SAcctNo+"' and BankAcctPin = '"+Spin+"'";
+				
+				String Rquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance + '"+TxnAmount+"' where BankAcctNo = '"+RAcctNo+"'";
+				Stm.executeUpdate(Squery);
+				Stm.executeUpdate(Rquery);
+			
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			}
+		public String GetPaymentAcctVerified(String AcctPin,String PhoneNo) {
+			try {
+				Statement Stm = con.createStatement();
+				
+				String query ="Select PhoneNo,PassWord from BankAccount where PassWord='"+AcctPin+"'";
+				
+				ResultSet rs = Stm.executeQuery(query);
+				if(rs.next()) {
+					String PAcctPin = rs.getString("PassWord");
+					return PAcctPin;
+				}
+			}catch(SQLException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
 		
 		
 	}

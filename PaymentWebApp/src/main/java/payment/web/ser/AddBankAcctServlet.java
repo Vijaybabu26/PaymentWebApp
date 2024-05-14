@@ -38,7 +38,7 @@ public class AddBankAcctServlet extends HttpServlet {
 		ba.setBankAcctName(BankName);
 		ba.setBankAcctTypeId(Integer.parseInt(BankAcctId));
 		ba.setBankIFSCCode(BankIFSCCode);
-		ba.setBankPin(Integer.parseInt(BankAcctPin));
+		ba.setBankPin(BankAcctPin);
 		ba.setCurrBankBal(500);
 		
 		HttpSession session = request.getSession();

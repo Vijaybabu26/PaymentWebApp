@@ -6,7 +6,7 @@ public class BankAccount {
 	String BankAcctName;
 	int BankAcctTypeId;
 	String BankIFSCCode;
-	int BankPin;
+	String BankPin;
 	double CurrBankBal;
 	
 	public int getUserId() {
@@ -39,11 +39,11 @@ public class BankAccount {
 	public void setBankIFSCCode(String bankIFSCCode) {
 		BankIFSCCode = bankIFSCCode;
 	}
-	public int getBankPin() {
+	public String getBankPin() {
 		return BankPin;
 	}
-	public void setBankPin(int bankPin) {
-		BankPin = bankPin;
+	public void setBankPin(String i) {
+		BankPin = i;
 	}
 	public double getCurrBankBal() {
 		return CurrBankBal;

@@ -14,10 +14,14 @@
 		<h2>Enter The Desitination Details</h2>
 		<label>Enter The Reciver Mobile No : </label>
 		<input type="text" name= "RMobileNo">
-		<br>
-		<h2></h2>
+		<br><br>
 		<label>Enter The Amount : </label>
 		<input type="text" name ="TxnAmount">
+		<br><br>
+		<label>Enter Your Account Pin : </label>
+		<input type="text" name ="AcctPin">
+		<br><br>
+		<input type="submit" Value="Send Money">
 		<hr>
 	</form>
 	</center>

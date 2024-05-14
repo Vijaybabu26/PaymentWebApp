@@ -51,7 +51,6 @@ public class WBTransactionSer extends HttpServlet {
 				rd.include(request, response);
 			}
 		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

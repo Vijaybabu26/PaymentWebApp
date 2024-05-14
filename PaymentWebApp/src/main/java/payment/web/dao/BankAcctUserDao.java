@@ -28,7 +28,7 @@ public class BankAcctUserDao {
 		
 		List<BankAccount> balist = new ArrayList<BankAccount>();
 		
-		String Query = "Select BankAcctNo,BankAcctName,BankIFSCCode,CurrBankBalance from BankAccount Where UserId=?";
+		String Query = "Select BankAcctNo,BankAcctName,BankIFSCCode,CurrBankBalance,BankAcctPin from BankAccount Where UserId=?";
 				
 		PreparedStatement st = con.prepareStatement(Query);
 		st.setInt(1, UserId);
@@ -40,8 +40,25 @@ public class BankAcctUserDao {
 			b.setBankAcctName(rs.getString("BankAcctName"));
 			b.setBankIFSCCode(rs.getString("BankIFSCCode"));
 			b.setCurrBankBal(rs.getDouble("CurrBankBalance"));
+			b.setBankPin(rs.getString("BankAcctPin"));
 			balist.add(b);
 		}
 		return balist;
+	}
+	public String GetAcctVerified(String AccountNo) {
+		try {
+			Statement Stm = con.createStatement();
+			
+			String query ="Select BankAcctPin from BankAccount where BankAcctNo='"+AccountNo+"'";
+			
+			ResultSet rs = Stm.executeQuery(query);
+			if(rs.next()) {
+				String BankPin = rs.getString("BankAcctPin");
+				return BankPin;
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

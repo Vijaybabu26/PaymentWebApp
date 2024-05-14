@@ -11,14 +11,15 @@
 <body>
 	<center><br>
 	<h1>Send Money To Bank</h1><br><hr>
-	<h3>Send money from Bank Account To Wallet</h3><br><hr>
-	<h3>Send money using Mobile no to Account no</h3><br><hr>
-	<h1>Enter The Destination Details</h1><br>
-	<form action="http://localhost:8080/PaymentWebApp/WBTransactionSer" method="post">
+	<h5>Send money from Bank Account To Wallet</h5><br>
+	<h6>Send money using Mobile no to Account no</h6><br>
+	<h2>Enter The Destination Details</h2><br>
+	<form action="http://localhost:8080/PaymentWebApp/BWTransactionSer" method="post">
 	<label><h3>Enter The Mobile No :</h3></label><input type="text" name="phno"><br><hr>
 	
-	<h1>Enter The Source Details</h1><br>
+	<h2>Enter The Source Details</h2><br>
 	<label><h3>Enter The Bank Account No : </h3></label><input type="text" name="accountno"><br>
+	<label><h3>Enter The Pin : </h3></label><input type="text" name="bankpin"><br>
 	<label><h3>Enter The Amount :  </h3></label><input type="text" name="txnamount"><br>
 	<input type="Submit" value="SEND MONEY">
 	</form>
