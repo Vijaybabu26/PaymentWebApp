@@ -131,12 +131,27 @@ public class TransactionDao {
 			}catch(SQLException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		public void DoWWTransaction(String SMobile,String RMobile,double TxnAmount) {
+			try {
+				Statement Stm = con.createStatement();
+				String Squery = "Update user Set CurrWalletBalance = CurrWalletBalance - '"+TxnAmount+"' where PhoneNo = '"+SMobile+"'";
+				
+				String Rquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo = '"+RMobile+"'";
+				
+				Stm.executeUpdate(Squery);
+				Stm.executeUpdate(Rquery);
+			}catch(SQLException e) {
+				e.printStackTrace();
 			}
-		public String GetPaymentAcctVerified(String AcctPin,String PhoneNo) {
+		}
+		
+		public String GetUserAcctPasswordVerify(String UserAcctPin,String PhoneNo) {
 			try {
 				Statement Stm = con.createStatement();
 				
-				String query ="Select PhoneNo,PassWord from BankAccount where PassWord='"+AcctPin+"'";
+				String query ="Select PhoneNo,PassWord from user where PhoneNo='"+PhoneNo+"'";
 				
 				ResultSet rs = Stm.executeQuery(query);
 				if(rs.next()) {
@@ -148,7 +163,6 @@ public class TransactionDao {
 			}
 			return null;
 		}
-		
 		
 	}
 

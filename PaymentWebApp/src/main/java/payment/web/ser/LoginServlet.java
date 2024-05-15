@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 			User SessionUser = db.getUserDetails(Phno);
 			
 			User sessionUser = (User)session.getAttribute("userd");
-				
+			
 			if(UserId != 0) {
 				
 				
