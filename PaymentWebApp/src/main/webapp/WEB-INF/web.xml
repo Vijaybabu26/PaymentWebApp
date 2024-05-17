@@ -129,4 +129,14 @@
     <servlet-name>WWTransactionSer</servlet-name>
     <url-pattern>/WWTransactionSer</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MiniStatementListSer</display-name>
+    <servlet-name>MiniStatementListSer</servlet-name>
+    <servlet-class>payment.web.ser.MiniStatementListSer</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MiniStatementListSer</servlet-name>
+    <url-pattern>/MiniStatementListSer</url-pattern>
+  </servlet-mapping>
 </web-app>

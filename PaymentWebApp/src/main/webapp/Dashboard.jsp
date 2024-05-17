@@ -1,4 +1,4 @@
-<%@page import="jakarta.security.auth.message.callback.PrivateKeyCallback.Request"%>
+""<%@page import="jakarta.security.auth.message.callback.PrivateKeyCallback.Request"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="java.util.List"%>
@@ -33,6 +33,7 @@
 <div class="menu">
 
 <a href="Transaction.jsp"><h2>Transactions</h2></a>
+<a href="MiniStatement.jsp"><h2>Mini Statements</h2></a>
 </div><hr>
 </center>    
 <div class="BankAcctList"> 

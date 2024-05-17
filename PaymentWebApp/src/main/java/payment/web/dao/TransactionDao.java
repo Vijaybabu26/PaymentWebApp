@@ -2,15 +2,19 @@ package payment.web.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import jakarta.security.auth.message.callback.SecretKeyCallback.Request;
 import jakarta.servlet.http.HttpSession;
 import payment.web.entity.BankAccount;
+import payment.web.entity.Transaction;
 import payment.web.entity.User;
 
 public class TransactionDao {
@@ -163,6 +167,26 @@ public class TransactionDao {
 			}
 			return null;
 		}
-		
+		public List<Transaction> MiniStatementList(int UserId)throws SQLException{
+			List<Transaction> TxnList = new ArrayList<Transaction>();
+			String Query = "Select TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,UserId from transaction where UserId =? ";
+			PreparedStatement st = con.prepareStatement(Query);
+			st.setInt(1, UserId);
+			ResultSet rs = st.executeQuery();
+			while(rs.next()) {
+				Transaction t = new Transaction();
+				t.setUserId(rs.getInt("UserId"));
+				t.setTxnId(rs.getString("TxnId"));
+				t.setTxnDate(rs.getDate("TxnDate"));
+				t.setSourceType(rs.getString("SourceType"));
+				t.setDestType(rs.getString("DestType"));
+				t.setTxnStatus(rs.getString("TxnStatus"));
+				t.setTxnAmount(rs.getDouble("TxnAmount"));
+				TxnList.add(t);
+				
+			}
+			return TxnList;
+			
+		}
 	}
 
