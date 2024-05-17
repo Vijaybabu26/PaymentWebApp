@@ -28,6 +28,7 @@ public class WBTransactionSer extends HttpServlet {
     	String AccountNo = request.getParameter("accountno");
     	String TxnAmount = request.getParameter("Wamount");
     	double txamount = Double.parseDouble(TxnAmount);
+    	String AcctPin = request.getParameter("pin");
     	
     	HttpSession session = request.getSession();
 		User sessionUser = (User)session.getAttribute("userd");
@@ -36,14 +37,22 @@ public class WBTransactionSer extends HttpServlet {
 		try {
 			TransactionDao txn = new TransactionDao();
 			if(txn.VerifyAccountNo(AccountNo)!= null) {
+				if(txn.GetUserAcctPasswordVerify(AcctPin, Phno).equals(AcctPin)) {
+					txn.DoWBTransaction(AccountNo,txamount , Phno);
+		    		double WalletBal = txn.getWalletBalance(Phno);
+					sessionUser.setCurrWalletBalance(WalletBal);
+					response.setContentType("text/html");
+					response.getWriter().write("Transaction Successfull");
+					RequestDispatcher rd = request.getRequestDispatcher("/BankAcctList");
+					rd.include(request, response);
+				}else {
+					response.setContentType("text/html");
+					response.getWriter().write("Please Verify Your Password");
+					RequestDispatcher rd = request.getRequestDispatcher("SendMoneyToWB.jsp");
+					rd.include(request, response);
+				}
 	    		
-	    		txn.DoWBTransaction(AccountNo,txamount , Phno);
-	    		double WalletBal = txn.getWalletBalance(Phno);
-				sessionUser.setCurrWalletBalance(WalletBal);
-				response.setContentType("text/html");
-				response.getWriter().write("Transaction Successfull");
-				RequestDispatcher rd = request.getRequestDispatcher("/BankAcctList");
-				rd.include(request, response);
+	    		
 	    	}else {
 				response.setContentType("text/html");
 				response.getWriter().write("Transaction Failed");

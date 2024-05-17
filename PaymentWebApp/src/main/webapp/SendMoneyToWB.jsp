@@ -19,6 +19,7 @@
 	<label><h3>Enter The Bank Account No : </h3></label><input type="text" name="accountno"><br><hr>
 	<h1>Enter The Source Details</h1><br>
 <%--<label><h3>Enter The Mobile No :</h3></label><input type="text" name="phno"><br> --%>	
+	<label><h3>Enter The Pin :  </h3></label><input type="text" name="pin"><br>
 	<label><h3>Enter The Amount :  </h3></label><input type="text" name="Wamount"><br>
 	<input type="Submit" value="SEND MONEY">
 	</form>

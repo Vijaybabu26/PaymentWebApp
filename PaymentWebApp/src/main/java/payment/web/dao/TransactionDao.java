@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,13 +25,30 @@ public class TransactionDao {
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/PaymentWebApp", "root", "root");
 	}
-	public boolean DoSelfBWTransaction(String SrcPhno,double TxnAmount,String DestAccNo) throws ClassNotFoundException,SQLException{
+	public boolean DoSelfBWTransaction(String DestPhno,double TxnAmount,String SrcAccNo) throws ClassNotFoundException,SQLException{
 		Statement st = con.createStatement();
 		UserDao db = new UserDao();
-		int UserId = db.getUserId(SrcPhno);
+		int UserId = db.getUserId(DestPhno);
 		
-		String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ DestAccNo +"' and UserId = '"+UserId+"'";
-		String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+SrcPhno+"'";
+		String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ SrcAccNo +"' and UserId = '"+UserId+"'";
+		String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+DestPhno+"'";
+		
+		Timestamp datenow = new Timestamp(new Date().getTime());
+		String dt = datenow.toString();
+		dt.toUpperCase();
+		dt =dt.replace("-", "M");
+		dt =dt.replace(" ","D");
+		dt =dt.replace(":", "T");
+		dt =dt.replace(".", "S");
+		String TransD = "TXNW" +dt;
+		
+		
+		String dquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+				+ "values('"+TransD+"','"+datenow+"','"+TxnAmount+"','"+"BANKACCOUNT"+"','"+"WALLET"+"','"+"DEBIT"+"','"+DestPhno+"')";
+		
+		
+		st.executeUpdate(dquery);
+		
 		
 		st.executeUpdate(Wquery);
 		st.executeUpdate(Bquery);
@@ -86,16 +105,59 @@ public class TransactionDao {
 			
 		}
 		
-		public void DoWBTransaction(String DestB, double TxnAmount, String SenderMobileNo) {
+		public String GetPhnoByBankAcct(String BankAccountNo) {
 			try {
 				Statement Stm = con.createStatement();
-//				
-				String wquery = "Update user Set CurrWalletBalance = CurrWalletBalance - '"+TxnAmount+"' where PhoneNo = '"+SenderMobileNo+"'";
+				String Query = "Select PhoneNo from BankAccount where BankAcctNo ='"+BankAccountNo+"'";
+				ResultSet rs =Stm.executeQuery(Query);
+				if(rs.next()) {
+					String Phno = rs.getString("PhoneNo");
+					return Phno;
+				}else {
+					System.out.println("Account Not Found");
+				}
+				
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}
+			return null;
+			
+				
+		}
+		
+		public void DoWBTransaction(String DestB, double TxnAmount, String SenderPhNo) {
+			try {
+				Statement Stm = con.createStatement();
+				
+				String wquery = "Update user Set CurrWalletBalance = CurrWalletBalance - '"+TxnAmount+"' where PhoneNo = '"+SenderPhNo+"'";
 
 				String bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance + '"+TxnAmount+"' where BankAcctNo = '"+DestB+"'";
 				
+				Timestamp datenow = new Timestamp(new Date().getTime());
+				String dt = datenow.toString();
+				dt.toUpperCase();
+				dt =dt.replace("-", "M");
+				dt =dt.replace(" ","D");
+				dt =dt.replace(":", "T");
+				dt =dt.replace(".", "S");
+				String TransD = "TXND" +dt;
+				String TransC = "TXNC"+dt;
+				
+				String ReciverPhno = GetPhnoByBankAcct(DestB);
+				System.out.println(ReciverPhno);
+				String dquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransD+"','"+datenow+"','"+TxnAmount+"','"+"WALLET"+"','"+"BANKACCOUNT"+"','"+"DEBIT"+"','"+SenderPhNo+"')";
+				String cquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransC+"','"+datenow+"','"+TxnAmount+"','"+"BANKACCOUNT"+"','"+"WALLET"+"','"+"CREDIT"+"','"+ReciverPhno+"')";
+				
+				Stm.executeUpdate(dquery);
+				
+				
+				Stm.executeUpdate(cquery);
 				Stm.executeUpdate(wquery);
 				Stm.executeUpdate(bquery);
+				
 				
 		
 				Stm.close();
@@ -104,12 +166,34 @@ public class TransactionDao {
 			}
 				
 		}
-		public void DoBWTransaction(double TxnAmount, String ReciverMobileNo, String SendAcctNo, String BankAcctPin) {
+		public void DoBWTransaction(double TxnAmount, String ReciverPhno, String SendAcctNo, String BankAcctPin) {
 			try {
 				Statement Stm = con.createStatement();
 //				
 			String Bquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"'  where BankAcctNo = '"+ SendAcctNo +"' and BankAcctPin = '"+BankAcctPin +"'";
-			String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+ReciverMobileNo+"'";
+			String Wquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo ='"+ReciverPhno+"'";
+			
+			
+
+			Timestamp datenow = new Timestamp(new Date().getTime());
+			String dt = datenow.toString();
+			dt.toUpperCase();
+			dt =dt.replace("-", "M");
+			dt =dt.replace(" ","D");
+			dt =dt.replace(":", "T");
+			dt =dt.replace(".", "S");
+			String TransD = "TXND" +dt;
+			String TransC = "TXNC"+dt;
+			
+			String SenderPhNo = GetPhnoByBankAcct(SendAcctNo);
+			
+			String dquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+					+ "values('"+TransD+"','"+datenow+"','"+TxnAmount+"','"+"BANKACCOUNT"+"','"+"WALLET"+"','"+"DEBIT"+"','"+SenderPhNo+"')";
+			String cquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+					+ "values('"+TransC+"','"+datenow+"','"+TxnAmount+"','"+"WALLET"+"','"+"BANKACCOUNT"+"','"+"CREDIT"+"','"+ReciverPhno+"')";
+			
+			Stm.executeUpdate(cquery);
+			Stm.executeUpdate(dquery);
 			
 			Stm.executeUpdate(Wquery);
 			Stm.executeUpdate(Bquery);
@@ -129,6 +213,28 @@ public class TransactionDao {
 				String Squery = "Update BankAccount Set CurrBankBalance = CurrBankBalance - '"+TxnAmount+"' where BankAcctNo = '"+SAcctNo+"' and BankAcctPin = '"+Spin+"'";
 				
 				String Rquery = "Update BankAccount Set CurrBankBalance = CurrBankBalance + '"+TxnAmount+"' where BankAcctNo = '"+RAcctNo+"'";
+				
+				Timestamp datenow = new Timestamp(new Date().getTime());
+				String dt = datenow.toString();
+				dt.toUpperCase();
+				dt =dt.replace("-", "M");
+				dt =dt.replace(" ","D");
+				dt =dt.replace(":", "T");
+				dt =dt.replace(".", "S");
+				String TransD = "TXND" +dt;
+				String TransC = "TXNC"+dt;
+				
+				String SenderPhNo = GetPhnoByBankAcct(SAcctNo);
+				String ReciverPhNo = GetPhnoByBankAcct(RAcctNo);
+				
+				String dquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransD+"','"+datenow+"','"+TxnAmount+"','"+"BANKACCOUNT"+"','"+"BANKACCOUNT"+"','"+"DEBIT"+"','"+SenderPhNo+"')";
+				String cquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransC+"','"+datenow+"','"+TxnAmount+"','"+"BANKACCOUNT"+"','"+"BANKACCOUNT"+"','"+"CREDIT"+"','"+ReciverPhNo+"')";
+				
+				Stm.executeUpdate(dquery);
+				Stm.executeUpdate(cquery);
+				
 				Stm.executeUpdate(Squery);
 				Stm.executeUpdate(Rquery);
 			
@@ -143,6 +249,26 @@ public class TransactionDao {
 				String Squery = "Update user Set CurrWalletBalance = CurrWalletBalance - '"+TxnAmount+"' where PhoneNo = '"+SMobile+"'";
 				
 				String Rquery = "Update user Set CurrWalletBalance = CurrWalletBalance + '"+TxnAmount+"' where PhoneNo = '"+RMobile+"'";
+				
+				Timestamp datenow = new Timestamp(new Date().getTime());
+				String dt = datenow.toString();
+				dt.toUpperCase();
+				dt =dt.replace("-", "M");
+				dt =dt.replace(" ","D");
+				dt =dt.replace(":", "T");
+				dt =dt.replace(".", "S");
+				String TransD = "TXND" +dt;
+				String TransC = "TXNC"+dt;
+				
+				String dquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransD+"','"+datenow+"','"+TxnAmount+"','"+"WALLET"+"','"+"WALLET"+"','"+"DEBIT"+"','"+SMobile+"')";
+				String cquery= "insert into Transaction(TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,PhoneNo) "
+						+ "values('"+TransC+"','"+datenow+"','"+TxnAmount+"','"+"WALLET"+"','"+"WALLET"+"','"+"CREDIT"+"','"+RMobile+"')";
+				
+				Stm.executeUpdate(dquery);
+				Stm.executeUpdate(cquery);
+				
+				
 				
 				Stm.executeUpdate(Squery);
 				Stm.executeUpdate(Rquery);

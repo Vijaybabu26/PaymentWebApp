@@ -20,8 +20,8 @@ public class BankAcctUserDao {
 	
 	public int AddBankAcct(BankAccount ba) throws SQLException {
 			Statement st = con.createStatement();
-			String bquery ="insert into BankAccount(UserId,BankAcctNo,BankAcctName,BankAcctTypeId,BankIFSCCode,BankAcctPin,CurrBankBalance)"
-					+ " values('"+ba.getUserId()+"','"+ba.getBankAcctNo()+"','"+ba.getBankAcctName()+"','"+ba.getBankAcctTypeId()+"','"+ba.getBankIFSCCode()+"','"+ba.getBankPin()+"','"+ba.getCurrBankBal()+"')";
+			String bquery ="insert into BankAccount(UserId,BankAcctNo,BankAcctName,BankAcctTypeId,BankIFSCCode,BankAcctPin,CurrBankBalance,PhoneNo)"
+					+ " values('"+ba.getUserId()+"','"+ba.getBankAcctNo()+"','"+ba.getBankAcctName()+"','"+ba.getBankAcctTypeId()+"','"+ba.getBankIFSCCode()+"','"+ba.getBankPin()+"','"+ba.getCurrBankBal()+"','"+ba.getPhno()+"')";
 			return st.executeUpdate(bquery);		
 	}
 	public List<BankAccount> BankAcctList(int UserId) throws SQLException{

@@ -36,11 +36,13 @@ public class AddMoneyToWalletSer extends HttpServlet {
 		HttpSession session = request.getSession();
 		User sessionUser = (User)session.getAttribute("userd");
 		String Phno = sessionUser.getPhno();
+		String AcctPin = request.getParameter("pin");
 		System.out.println(txnamount+AccountNo+Phno);
 
 		try {
 			TransactionDao txn = new TransactionDao();
 			if(txn.VerifyAccountNo(AccountNo)!= null){
+				if(txn.GetUserAcctPasswordVerify(AcctPin, Phno).equals(AcctPin)) {
 				txn.DoSelfBWTransaction(Phno, txnamount, AccountNo);
 				System.out.println(Phno + " " +txnamount+ " " +AccountNo);
 				response.setContentType("text/html");
@@ -49,6 +51,14 @@ public class AddMoneyToWalletSer extends HttpServlet {
 				response.getWriter().write("Transaction Successfull");
 				RequestDispatcher rd = request.getRequestDispatcher("/BankAcctList");
 				rd.include(request, response);
+				}else {
+					response.setContentType("text/html");
+					response.getWriter().write("Please Verify Your Password");
+					RequestDispatcher rd = request.getRequestDispatcher("SendMoneyToWB.jsp");
+					rd.include(request, response);
+				}
+				
+				
 			}else {
 				response.setContentType("text/html");
 				response.getWriter().write("Transaction Failed");

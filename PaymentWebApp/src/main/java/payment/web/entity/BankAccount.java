@@ -8,7 +8,14 @@ public class BankAccount {
 	String BankIFSCCode;
 	String BankPin;
 	double CurrBankBal;
+	String Phno;
 	
+	public String getPhno() {
+		return Phno;
+	}
+	public void setPhno(String phno) {
+		Phno = phno;
+	}
 	public int getUserId() {
 		return UserId;
 	}

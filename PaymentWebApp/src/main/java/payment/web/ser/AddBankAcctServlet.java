@@ -43,8 +43,10 @@ public class AddBankAcctServlet extends HttpServlet {
 		
 		HttpSession session = request.getSession();
 		int UserId = (int)session.getAttribute("user");
+		User sessionUser = (User)session.getAttribute("userd");
 		
 		ba.setUserId(UserId);
+		ba.setPhno((String)sessionUser.getPhno());
 
 
 		try {
