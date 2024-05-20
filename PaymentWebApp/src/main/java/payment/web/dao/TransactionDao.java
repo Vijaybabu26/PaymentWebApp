@@ -293,15 +293,15 @@ public class TransactionDao {
 			}
 			return null;
 		}
-		public List<Transaction> MiniStatementList(int UserId)throws SQLException{
+		public List<Transaction> MiniStatementList(String Phno)throws SQLException{
 			List<Transaction> TxnList = new ArrayList<Transaction>();
-			String Query = "Select TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus,UserId from transaction where UserId =? ";
+			String Query = "Select TxnId,TxnDate,TxnAmount,SourceType,DestType,TxnStatus from transaction where PhoneNo =? ";
 			PreparedStatement st = con.prepareStatement(Query);
-			st.setInt(1, UserId);
+			st.setString(1, Phno);
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
 				Transaction t = new Transaction();
-				t.setUserId(rs.getInt("UserId"));
+				
 				t.setTxnId(rs.getString("TxnId"));
 				t.setTxnDate(rs.getDate("TxnDate"));
 				t.setSourceType(rs.getString("SourceType"));

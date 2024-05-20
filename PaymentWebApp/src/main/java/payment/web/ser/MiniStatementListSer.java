@@ -36,9 +36,10 @@ public class MiniStatementListSer extends HttpServlet {
 		try {
 			TransactionDao t = new TransactionDao();
 			User SessionUser = (User) session.getAttribute("userd");
-			int UserId = SessionUser.getUserId();
+			String Phno = SessionUser.getPhno();
 			
-			List<Transaction> txnlist = t.MiniStatementList(UserId);
+			List<Transaction> txnlist = t.MiniStatementList(Phno);
+			System.out.println(Phno);
 			session.setAttribute("txnlist", txnlist);
 			RequestDispatcher rd = request.getRequestDispatcher("MiniStatement.jsp");
 			rd.forward(request, response);

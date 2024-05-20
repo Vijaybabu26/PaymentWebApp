@@ -13,8 +13,11 @@
 	<div class="header">
 	<h1>Mini Statement</h1>
 	</div><hr>
+	<div class="Home">
+	<a href="http://localhost:8080/PaymentWebApp/BankAcctList"><h2>Back To Home</h2></a>
+	</div>
 	<div class="TransactionList">
-	<h1>MINI STATEMENTS YOUR TRANSACTIONS</h1>
+	<h1>MINI STATEMENTS OF YOUR TRANSACTIONS</h1>
 	<% List<Transaction> txnlist = (List<Transaction>)session.getAttribute("txnlist");
 	if(txnlist != null){
 		for(int i=0;i<txnlist.size();i++){

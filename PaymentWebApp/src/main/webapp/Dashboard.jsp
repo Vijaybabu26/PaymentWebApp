@@ -33,7 +33,7 @@
 <div class="menu">
 
 <a href="Transaction.jsp"><h2>Transactions</h2></a>
-<a href="MiniStatement.jsp"><h2>Mini Statements</h2></a>
+<a href="http://localhost:8080/PaymentWebApp/MiniStatementListSer"><h2>Mini Statements</h2></a>
 </div><hr>
 </center>    
 <div class="BankAcctList"> 
@@ -50,7 +50,7 @@
 		
 		<%} %>
 		<%} %>
-		<form action="http://localhost:8080/PaymentWebApp/AddBankAcct.jsp">
+		<form action="AddBankAcct.jsp">
 		<input type="submit" value="Add Bank Account" >
 		</form>
 </div>
