@@ -54,7 +54,7 @@ public class AddMoneyToWalletSer extends HttpServlet {
 				}else {
 					response.setContentType("text/html");
 					response.getWriter().write("Please Verify Your Password");
-					RequestDispatcher rd = request.getRequestDispatcher("SendMoneyToWB.jsp");
+					RequestDispatcher rd = request.getRequestDispatcher("AddMoneyToWallet.jsp");
 					rd.include(request, response);
 				}
 				
